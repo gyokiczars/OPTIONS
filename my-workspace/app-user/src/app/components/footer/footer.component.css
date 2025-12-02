@@ -1,0 +1,13 @@
+.site-footer {
+  background: #041025;
+  color: #cbd5e1;
+  padding: 2rem 1rem;
+}
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.cols {
+  display: flex;
+  gap: 2rem;
+}
