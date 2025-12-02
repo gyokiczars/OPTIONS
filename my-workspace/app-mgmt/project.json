@@ -1,0 +1,83 @@
+{
+  "name": "app-mgmt",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "app-mgmt/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/app-mgmt",
+        "browser": "app-mgmt/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "app-mgmt/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "app-mgmt/public"
+          }
+        ],
+        "styles": ["app-mgmt/src/styles.css"]
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "4kb",
+              "maximumError": "8kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "continuous": false,
+      "executor": "@angular/build:dev-server",
+       "options": {
+        "buildTarget": "app-user:build",
+        "port": 4300,
+        "host": "localhost"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "app-mgmt:build:production"
+        },
+        "development": {
+          "buildTarget": "app-mgmt:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "serve-static": {
+      "continuous": true,
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "app-mgmt:build",
+        "staticFilePath": "dist/app-mgmt/browser",
+        "spa": true
+      }
+    }
+  }
+}
